@@ -1,0 +1,174 @@
+/* Variables */
+:root {
+    --color-principal: #c22135;
+    --color-secundario: #5a3e2b;
+    --color-fondo: #fff8f0;
+    --fuente-principal: Arial, sans-serif;
+  }
+  
+  /* Estilos generales */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-secundario);
+  }
+  
+  header {
+    background-color: var(--color-principal);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  header .logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 20px;
+  }
+  
+  header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  header nav ul li {
+    margin-right: 20px;
+  }
+  
+  header nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  header nav a:hover {
+    color: #ccc;
+  }
+  
+  .menu-hamburguesa {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .menu-hamburguesa div {
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    margin: 5px;
+  }
+  
+  /* Sección de bienvenida */
+  .bienvenida {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .bienvenida h2 {
+    margin-bottom: 10px;
+  }
+  
+  /* Productos */
+  .productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .producto {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid var(--color-principal);
+    border-radius: 10px;
+    width: 200px;
+  }
+  
+  .producto img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .producto p {
+    margin-bottom: 10px;
+  }
+  
+  .producto button {
+    background-color: var(--color-principal);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .producto button:hover {
+    background-color: #ccc;
+  }
+  
+  /* Carrito */
+  .carrito {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .carrito h2 {
+    margin-bottom: 10px;
+  }
+  
+  .carrito form {
+    margin-bottom: 20px;
+  }
+  
+  .carrito input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--color-principal);
+  }
+  
+  .carrito button {
+    background-color: var(--color-principal);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .carrito button:hover {
+    background-color: #ccc;
+  }
+  
+  /* Media queries */
+  @media (max-width: 768px) {
+    header nav ul {
+      flex-direction: column;
+    }
+    
+    header nav ul li {
+      margin-bottom: 10px;
+    }
+    
+    .menu-hamburguesa {
+      display: block;
+    }
+    
+    .productos {
+      flex-direction: column;
+    }
+    
+    .producto {
+      margin-bottom: 20px;
+    }
+  }
+  

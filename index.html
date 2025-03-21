@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulcería Bethel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tus estilos existentes */
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="imagenes/img.jpeg" alt="Logo Dulcería Bethel">
+        </div>
+        <h1>Dulcería Bethel</h1>
+        <div class="menu-hamburguesa" id="menuHamburguesa" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#bienvenida">Quiénes Somos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#admin" onclick="mostrarAdmin()">Admin</a></li> <!-- Nuevo enlace para Admin -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sección de bienvenida -->
+    <section id="bienvenida">
+        <h2>¡Bienvenidos a Dulcería Bethel!</h2>
+        <p>¡En nuestra tienda encontrarás los dulces más deliciosos y únicos para satisfacer tus antojos! Disfruta de una experiencia dulce como ninguna otra. ¡Únete a nuestra comunidad y disfruta de los beneficios de comprar con nosotros!</p>
+    </section>
+
+    <!-- Sección de admin -->
+    <section id="admin">
+    
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Administración de Productos</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f4f4f4;
+                }
+        
+                .container {
+                    width: 80%;
+                    margin: 20px auto;
+                    background: #fff;
+                    padding: 20px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    border-radius: 8px;
+                }
+        
+                h1, h2 {
+                    text-align: center;
+                    color: #c22135;
+                }
+        
+                button {
+                    display: block;
+                    width: 100%;
+                    padding: 10px;
+                    background-color: #c22135;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+        
+                button:hover {
+                    background-color: #a81c2d;
+                }
+        
+                #adminSection {
+                    display: none; /* Ocultar la sección de administración por defecto */
+                }
+        
+                form {
+                    margin-bottom: 20px;
+                }
+        
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                    color: #333;
+                }
+        
+                input[type="text"], textarea, input[type="number"], input[type="file"] {
+                    width: 100%;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+        
+                #excelTable {
+                    margin-top: 20px;
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+        
+                #excelTable th, #excelTable td {
+                    border: 1px solid #ccc;
+                    padding: 8px;
+                    text-align: left;
+                }
+        
+                #excelTable th {
+                    background-color: #f1d734;
+                    color: #333;
+                }
+        
+                #productsSection {
+                    margin-top: 40px;
+                    padding: 20px;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+        
+                .product-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 20px;
+                }
+        
+                .product-card {
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    padding: 15px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                }
+        
+                .product-card h3 {
+                    color: #c22135;
+                    margin: 0 0 10px;
+                }
+        
+                .product-card p {
+                    color: #333;
+                    margin: 5px 0;
+                }
+        
+                .product-card .price {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #c22135;
+                }
+        
+                .product-card .stock {
+                    font-size: 14px;
+                    color: #666;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Administración de Productos</h1>
+        
+                <!-- Botón para mostrar/ocultar la sección de administración -->
+                <button id="toggleAdminButton">Mostrar Administración</button>
+        
+                <!-- Sección de administración -->
+                <div id="adminSection">
+                    <!-- Formulario para agregar productos manualmente -->
+                    <form id="manualForm">
+                        <h2>Agregar Producto Manualmente</h2>
+                        <label for="nombre">Nombre del Producto:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+        
+                        <label for="descripcion">Descripción:</label>
+                        <textarea id="descripcion" name="descripcion" required></textarea>
+        
+                        <label for="precio">Precio:</label>
+                        <input type="number" id="precio" name="precio" step="0.01" required>
+        
+                        <label for="stock">Stock:</label>
+                        <input type="number" id="stock" name="stock" required>
+        
+                        <button type="submit">Agregar Producto</button>
+                    </form>
+        
+                    <!-- Formulario para subir productos desde un archivo Excel -->
+                    <form id="excelForm">
+                        <h2>Subir Productos desde Excel</h2>
+                        <label for="excelFile">Selecciona un archivo Excel:</label>
+                        <input type="file" id="excelFile" name="excelFile" accept=".xlsx, .xls" required>
+        
+                        <button type="submit">Subir Archivo</button>
+                    </form>
+        
+                    <!-- Tabla para mostrar los datos del archivo Excel -->
+                    <h2>Datos del Archivo Excel</h2>
+                    <table id="excelTable">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos del Excel se mostrarán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+        
+                <!-- Sección de productos -->
+                <div id="productsSection">
+                    <h2>Productos Subidos</h2>
+                    <div class="product-grid" id="productGrid">
+                        <!-- Los productos se mostrarán aquí -->
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Incluir la librería SheetJS para leer archivos Excel -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        
+            <script>
+                // Mostrar/ocultar la sección de administración
+                const toggleAdminButton = document.getElementById('toggleAdminButton');
+                const adminSection = document.getElementById('adminSection');
+        
+                toggleAdminButton.addEventListener('click', () => {
+                    if (adminSection.style.display === 'none') {
+                        adminSection.style.display = 'block';
+                        toggleAdminButton.textContent = 'Ocultar Administración';
+                    } else {
+                        adminSection.style.display = 'none';
+                        toggleAdminButton.textContent = 'Mostrar Administración';
+                    }
+                });
+        
+                // Leer archivo Excel y mostrar los datos en la tabla
+                const excelForm = document.getElementById('excelForm');
+                const excelFileInput = document.getElementById('excelFile');
+                const excelTableBody = document.querySelector('#excelTable tbody');
+                const productGrid = document.getElementById('productGrid');
+        
+                // Función para agregar un producto a la sección de productos
+                function addProductToGrid(product) {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <h3>${product.nombre}</h3>
+                        <p>${product.descripcion}</p>
+                        <p class="price">$${product.precio.toFixed(2)}</p>
+                        <p class="stock">Stock: ${product.stock}</p>
+                    `;
+                    productGrid.appendChild(productCard);
+                }
+        
+                // Manejar el formulario manual
+                const manualForm = document.getElementById('manualForm');
+                manualForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+        
+                    const product = {
+                        nombre: document.getElementById('nombre').value,
+                        descripcion: document.getElementById('descripcion').value,
+                        precio: parseFloat(document.getElementById('precio').value),
+                        stock: parseInt(document.getElementById('stock').value),
+                    };
+        
+                    addProductToGrid(product);
+                    manualForm.reset();
+                });
+        
+                // Manejar el formulario de Excel
+                excelForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+        
+                    const file = excelFileInput.files[0];
+                    if (!file) {
+                        alert('Por favor, selecciona un archivo Excel.');
+                        return;
+                    }
+        
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+        
+                        // Obtener la primera hoja del archivo Excel
+                        const sheetName = workbook.SheetNames[0];
+                        const sheet = workbook.Sheets[sheetName];
+        
+                        // Convertir la hoja a JSON
+                        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        
+                        // Limpiar la tabla antes de agregar nuevos datos
+                        excelTableBody.innerHTML = '';
+        
+                        // Mostrar los datos en la tabla y en la sección de productos
+                        jsonData.forEach((row, index) => {
+                            if (index > 0 && row.length >= 4) { // Ignorar la primera fila (encabezados)
+                                const product = {
+                                    nombre: row[0],
+                                    descripcion: row[1],
+                                    precio: parseFloat(row[2]),
+                                    stock: parseInt(row[3]),
+                                };
+        
+                                // Agregar a la tabla
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${product.nombre}</td>
+                                    <td>${product.descripcion}</td>
+                                    <td>$${product.precio.toFixed(2)}</td>
+                                    <td>${product.stock}</td>
+                                `;
+                                excelTableBody.appendChild(tr);
+        
+                                // Agregar a la sección de productos
+                                addProductToGrid(product);
+                            }
+                        });
+                    };
+        
+                    reader.readAsArrayBuffer(file);
+                });
+            </script>
+        </body>
+        </html>        
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulcería Bethel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #fff2e6;
+            color: #5a3e2b;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Header */
+
+
+        
+        header {
+            background: #c22135;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 48px;
+            letter-spacing: 3px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        header .logo img {
+            width: 80px;
+            height: auto;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1d734;
+        }
+
+        /* Menú hamburguesa */
+        .menu-hamburguesa {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .menu-hamburguesa div {
+            width: 30px;
+            height: 4px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .menu-hamburguesa.active div:nth-child(1) {
+            transform: rotate(45deg);
+            position: relative;
+            top: 8px;
+        }
+
+        .menu-hamburguesa.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-hamburguesa.active div:nth-child(3) {
+            transform: rotate(-45deg);
+            position: relative;
+            top: -8px;
+        }
+
+        /* Estilos para el menú cuando está en modo móvil */
+        nav ul {
+            display: flex;
+        }
+
+        nav ul li {
+            display: inline-block;
+        }
+
+        nav ul li a {
+            padding: 10px;
+            font-size: 18px;
+            color: white;
+        }
+
+        nav ul li a:hover {
+            color: #f1d734;
+        }
+
+        /* Estilos de menú cuando el tamaño de pantalla es pequeño */
+        @media (max-width: 860px) {
+            nav ul {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+                background: #c22135;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 10px 0;
+            }
+
+            nav ul li {
+                width: 100%;
+                border-bottom: 1px solid #fff;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 15px;
+            }
+
+            .menu-hamburguesa {
+                display: flex;
+            }
+
+            .menu-hamburguesa.active + ul {
+                display: block;
+            }
+        }
+
+        /* Sección de bienvenida */
+        section#bienvenida {
+            padding: 120px 20px;
+            background-image: url('imagenes/welcome-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #2c2c2c;
+            text-align: center;
+            border-bottom: 5px solid #c22135;
+            position: relative;
+            z-index: 1;
+        }
+
+        section#bienvenida h2 {
+            font-size: 48px;
+            font-family: 'Lobster', cursive;
+            margin-bottom: 20px;
+            color: #f1d734;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        section#bienvenida p {
+            font-size: 22px;
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            color: #2c2c2c;
+            text-shadow: none;
+        }
+
+/* Estilos para la sección de administración */
+section#admin {
+    padding: 40px 20px;
+    background: #fff;
+    text-align: center;
+    border-top: 2px solid #c22135;
+}
+
+section#admin h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #c22135;
+}
+
+#formAgregarProducto {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#formAgregarProducto input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #c22135;
+    border-radius: 5px;
+    outline: none;
+}
+
+#formAgregarProducto button {
+    background: #c22135;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#formAgregarProducto button:hover {
+    background: #f1d734;
+}
+
+    </style>
+</head>
+<body>
+
+
+
+
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            let hamburger = document.getElementById("menuHamburguesa");
+            menu.classList.toggle("active");
+            hamburger.classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulcería Bethel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset general de márgenes y padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body General */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #fff2e6;
+            color: #5a3e2b;
+            line-height: 1.6;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        /* Header */
+        header {
+            background: #c22135; /* Rojo */
+            color: white;
+            padding: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Alineación del logo a la izquierda */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 48px;
+            letter-spacing: 3px;
+            text-align: center;
+            flex-grow: 1; /* Esto asegura que el título esté centrado */
+        }
+
+        header .logo img {
+            width: 80px; /* Tamaño del logo */
+            height: auto;
+        }
+
+
+        /* Navbar */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1d734; /* Amarillo */
+        }
+
+        /* Productos */
+        section#productos {
+            padding: 40px 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        section#productos h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #c22135; /* Rojo */
+        }
+
+        .productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        .producto {
+            background: #ffebcc;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .producto img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .producto:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .producto p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #c22135; /* Rojo */
+        }
+
+        .producto button {
+            background: #c22135; /* Rojo */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .producto button:hover {
+            background: #f1d734; /* Amarillo */
+        }
+
+        /* Carrito */
+        section#carrito {
+            background: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+            border-top: 2px solid #c22135; /* Rojo */
+        }
+
+        .carrito h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #c22135; /* Rojo */
+        }
+
+        .carrito h3 {
+            font-size: 22px;
+            margin-top: 30px;
+            color: #5a3e2b;
+        }
+
+        .carrito ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .carrito ul li {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .carrito ul li input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .carrito button {
+            background: #c22135; /* Rojo */
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .carrito button:hover {
+            background: #f1d734; /* Amarillo */
+        }
+
+        .carrito form input {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 80%;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: border-color 0.3s ease;
+        }
+
+        .carrito form input:focus {
+            border-color: #c22135; /* Rojo */
+        }
+
+        /* Animación */
+        .animar {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 36px;
+            }
+
+            .productos {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <section id="productos" class="productos animar">
+        <!-- Barra de búsqueda con ícono de lupa fija -->
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px; position: relative;">
+            <span style="cursor: pointer; font-size: 24px; color: #c22135; position: absolute; left: 10px;">
+                🔍
+            </span>
+            <input type="text" id="busqueda" placeholder="Busca tu dulce favorito..." onkeyup="filtrarProductos()" 
+                   style="width: 40%; padding: 10px 15px; font-size: 16px; border: 2px solid #c22135; border-radius: 25px; text-align: left; outline: none; box-shadow: 0px 4px 6px rgba(0,0,0,0.15); transition: all 0.3s ease-in-out; background: #fff8f0; color: #5a3e2b; margin-left: 35px; display: block;">
+        </div>
+    
+    
+    </section>    
+        <h2 style="text-align: center; font-size: 28px; color: #c22135;">Nuestros Dulces</h2>
+        
+    
+    <script>
+        function filtrarProductos() {
+            let input = document.getElementById("busqueda").value.toLowerCase();
+            let productos = document.querySelectorAll(".producto");
+            
+            productos.forEach(producto => {
+                let nombre = producto.getAttribute("data-nombre").toLowerCase();
+                if (nombre.includes(input)) {
+                    producto.style.order = "-1"; // Aparece primero
+                    producto.style.display = "block";
+                } else {
+                    producto.style.order = "";
+                    producto.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+
+</section>
+
+
+    <!-- Productos -->
+    <section id="productos" class="productos animar"> 
+
+        <div class="producto" data-nombre="DUCALES X6 TACOS" data-precio="13361">
+            <img src="imagenes/DUCALES X6.jpeg" alt="DUCALES X6 TACOS">
+            <p>DUCALES X6 TACOS - $13,361</p>
+            <button onclick="agregarAlCarrito(this)">Agregar</button>
+        </div>
+    
+        <div class="producto" data-nombre="SÚPER ÁCIDO POLVO X80" data-precio="7647">
+            <img src="placeholder.jpg" alt="SÚPER ÁCIDO POLVO X80">
+            <p>SÚPER ÁCIDO POLVO X80 - $7,647</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="REVOLCÓN ATOMOX48" data-precio="6723">
+            <img src="placeholder.jpg" alt="REVOLCÓN ATOMOX48">
+            <p>REVOLCÓN ATOMOX48 - $6,723</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto" data-nombre="BOLSA MINICHIPSX12" data-precio="13613">
+            <img src="placeholder.jpg" alt="BOLSA MINICHIPSX12">
+            <p>BOLSA MINICHIPSX12 - $13,613</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="LOKIÑO X100" data-precio="63">
+            <img src="placeholder.jpg" alt="LOKIÑO X100">
+            <p>LOKIÑO X100 - $63</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="PIN POP GTE. SURTIDO X24" data-precio="7143">
+            <img src="placeholder.jpg" alt="PIN POP GTE. SURTIDO X24">
+            <p>PIN POP GTE. SURTIDO X24 - $7,143</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="PIN POP PÑO. X24 SURTIDO" data-precio="5462">
+            <img src="placeholder.jpg" alt="PIN POP PÑO. X24 SURTIDO">
+            <p>PIN POP PÑO. X24 SURTIDO - $5,462</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="MILLOWS X50 UNICORNIO" data-precio="6975">
+            <img src="placeholder.jpg" alt="MILLOWS X50 UNICORNIO">
+            <p>MILLOWS X50 UNICORNIO - $6,975</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="MILLOWS X50 OSO" data-precio="6975">
+            <img src="placeholder.jpg" alt="MILLOWS X50 OSO">
+            <p>MILLOWS X50 OSO - $6,975</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="FRESA CHUPIWON X24" data-precio="6555">
+            <img src="placeholder.jpg" alt="FRESA CHUPIWON X24">
+            <p>FRESA CHUPIWON X24 - $6,555</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="TRULULU X70 GRS. STDAS.CJAX24" data-precio="1387">
+            <img src="placeholder.jpg" alt="TRULULU X70 GRS. STDAS.CJAX24">
+            <p>TRULULU X70 GRS. STDAS.CJAX24 - $1,387</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="BARRILETE MUSICAL X50 UDS." data-precio="6555">
+            <img src="placeholder.jpg" alt="BARRILETE MUSICAL X50 UDS.">
+            <p>BARRILETE MUSICAL X50 UDS. - $6,555</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="NUCITA X18" data-precio="9580">
+            <img src="placeholder.jpg" alt="NUCITA X18">
+            <p>NUCITA X18 - $9,580</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="BOM BOM BUM X24 SURTIDO" data-precio="291">
+            <img src="placeholder.jpg" alt="BOM BOM BUM X24 SURTIDO">
+            <p>BOM BOM BUM X24 SURTIDO - $291</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto" data-nombre="MENTA X100 SURTIDA COLOM." data-precio="66">
+            <img src="placeholder.jpg" alt="MENTA X100 SURTIDA COLOM.">
+            <p>MENTA X100 SURTIDA COLOM. - $66</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="Crema MUU X12" data-precio="4706">
+            <img src="placeholder.jpg" alt="Crema MUU X12">
+            <p>Crema MUU X12 - $4,706</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="TIPITIN CORAZÓN X25" data-precio="3782">
+            <img src="placeholder.jpg" alt="TIPITIN CORAZÓN X25">
+            <p>TIPITIN CORAZÓN X25 - $3,782</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="BRINKI X6 CHOCOLATE" data-precio="7899">
+            <img src="placeholder.jpg" alt="BRINKI X6 CHOCOLATE">
+            <p>BRINKI X6 CHOCOLATE - $7,899</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="WAFER MUU X15 LECHE" data-precio="6639">
+            <img src="placeholder.jpg" alt="WAFER MUU X15 LECHE">
+            <p>WAFER MUU X15 LECHE - $6,639</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="MINI SNACKIX12" data-precio="3950">
+            <img src="placeholder.jpg" alt="MINI SNACKIX12">
+            <p>MINI SNACKIX12 - $3,950</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="AMOR GLACIA X15" data-precio="17500">
+            <img src="placeholder.jpg" alt="AMOR GLACIA X15">
+            <p>AMOR GLACIA X15 - $17,500</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        <div class="producto" data-nombre="AMOR LECHE X8" data-precio="10700">
+            <img src="placeholder.jpg" alt="AMOR LECHE X8">
+            <p>AMOR LECHE X8 - $10,700</p>
+            <button onclick="agregarAlCarrito(this)">Agregar al carrito</button>
+        </div>
+        
+        <!-- Agrega más productos aquí -->
+
+    </section>
+    
+
+    <html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .carrito {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #007bff;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #343a40;
+        }
+
+        #formCliente input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        #lista-carrito {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .producto-info {
+            flex-grow: 1;
+        }
+
+        .cantidad {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .botones-carrito {
+            display: flex;
+            align-items: center;
+        }
+
+        .botones-carrito button {
+            margin-left: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .botones-carrito button:hover {
+            background-color: #c0392b;
+        }
+
+        .total {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        button#realizarPedido {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2em;
+        }
+
+        button#realizarPedido:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Carrito -->
+    <section id="carrito" class="carrito animar">
+        <h2>Carrito de Compras</h2>
+
+        <div>
+            <h3>Datos del Cliente</h3>
+            <form id="formCliente">
+                <input type="text" id="nombreCliente" placeholder="Nombre Completo" required>
+                <input type="text" id="cedulaCliente" placeholder="Cédula de Identidad" required>
+                <input type="text" id="direccionCliente" placeholder="Dirección de Envío" required>
+                <input type="tel" id="telefonoCliente" placeholder="Número de Teléfono" required>
+            </form>
+
+            <h3>Productos en el Carrito</h3>
+            <ul id="lista-carrito">
+                <!-- Aquí se agregarán los productos del carrito -->
+            </ul>
+
+            <h3>Total: <span id="total" class="total">$0</span></h3>
+
+            <button id="realizarPedido" onclick="enviarPedido()">Realizar Pedido</button>
+        </div>
+    </section>
+    
+
+    <script>
+        let carrito = [];
+
+        // Agregar productos al carrito
+        function agregarAlCarrito(boton) {
+            let producto = boton.parentElement;
+            let nombre = producto.getAttribute('data-nombre');
+            let precio = parseFloat(producto.getAttribute('data-precio'));
+
+            let item = carrito.find(i => i.nombre === nombre);
+
+            if (item) {
+                item.cantidad++;
+            } else {
+                carrito.push({ nombre, precio, cantidad: 1 });
+            }
+
+            actualizarCarrito();
+        }
+
+        // Actualizar carrito visualmente
+        function actualizarCarrito() {
+            let carritoUl = document.getElementById('lista-carrito');
+            carritoUl.innerHTML = '';
+
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                let li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="producto-info">
+                        ${item.nombre} x
+                        <input type="number" value="${item.cantidad}" min="1" class="cantidad" onchange="actualizarCantidad(${index}, this.value)" />
+                        - $${(item.precio * item.cantidad).toFixed(2)}
+                    </div>
+                    <div class="botones-carrito">
+                        <button onclick="eliminarProducto(${index})">Eliminar</button>
+                    </div>
+                `;
+                carritoUl.appendChild(li);
+                total += item.precio * item.cantidad;
+            });
+
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Actualizar la cantidad de un producto
+        function actualizarCantidad(index, cantidad) {
+            if (cantidad < 1) {
+                carrito[index].cantidad = 1;
+            } else {
+                carrito[index].cantidad = parseInt(cantidad);
+            }
+            actualizarCarrito();
+        }
+
+        // Eliminar producto del carrito
+        function eliminarProducto(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        // Enviar el pedido
+        function enviarPedido() {
+            let nombre = document.getElementById('nombreCliente').value;
+            let cedula = document.getElementById('cedulaCliente').value;
+            let direccion = document.getElementById('direccionCliente').value;
+            let telefono = document.getElementById('telefonoCliente').value;
+
+            if (!nombre || !cedula || !direccion || !telefono) {
+                alert("Todos los campos son obligatorios.");
+                return;
+            }
+
+            let mensaje = `Pedido de Dulcería Bethel\n\nCliente: ${nombre}\nCédula: ${cedula}\nDirección: ${direccion}\nTeléfono: ${telefono}\n\nProductos:\n`;
+
+            carrito.forEach(item => {
+                mensaje += `${item.nombre} x${item.cantidad} - $${item.precio * item.cantidad}\n`;
+            });
+
+            let url = `https://wa.me/573218521582?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+     
+
+</body>
+</html>
+
+
